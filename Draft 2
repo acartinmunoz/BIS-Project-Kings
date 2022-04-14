@@ -1,0 +1,38 @@
+from tkinter import *
+
+
+class ShippingCalculator:
+    def __init__(self):
+        window = Tk()
+        window.title("Inventory Calculator")
+
+        photo = PhotoImage(file=r'KingsLogo.gif')
+        Label(window, image=photo).grid(row = 1, column = 1, sticky = W)
+
+        Label(window, text = "Type of Alcohol").grid(row = 2, column = 1, sticky = W)
+        Label(window, text = "Date Ordered").grid(row = 3, column = 1, sticky = W)
+        Label(window, text = "Date Received").grid(row = 4, column = 1, sticky = W)
+        Label(window, text = "Number of Packages").grid(row = 2, column = 3, sticky = W)
+        Label(window, text = "Units per Package").grid(row = 3, column = 3, sticky = W)
+        Label(window, text = "Total Inventory").grid(row = 4, column = 3, sticky = W)
+       
+        self.typeAlcohol = StringVar()
+        Entry(window, textvariable = self.typeAlcohol, justify = RIGHT).grid(row = 2, column = 2)
+        self.dateOrdered = StringVar()
+        Entry(window, textvariable = self.dateOrdered, justify = RIGHT).grid(row = 3, column = 2)
+        self.dateReceived = StringVar()
+        Entry(window, textvariable = self.dateReceived, justify = RIGHT).grid(row = 4, column = 2)
+        self.numberPackages = IntVar()
+        Entry(window, textvariable = self.numberPackages, justify = RIGHT).grid(row = 2, column = 4)
+        self.unitsPackage = IntVar()
+        Entry(window, textvariable = self.unitsPackage, justify = RIGHT).grid(row = 3, column = 4)
+
+        self.monthlyPaymentVar = StringVar()
+        Label(window, textvariable = self.monthlyPaymentVar).grid(row = 4, column = 4, sticky = E)
+
+        Button(window, text = "Complete Order").grid(row = 10, column = 4, sticky = E)
+        Button(window, text = "Help").grid(row = 0, column = 4, sticky = E)
+
+        window.mainloop() 
+
+ShippingCalculator()
