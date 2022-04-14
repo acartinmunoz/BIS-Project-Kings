@@ -1,0 +1,29 @@
+from tkinter import *
+
+class ShippingCalculator:
+    def __init__(self):
+        window = Tk()
+        window.title("Shipment Calculator")
+
+        photo = PhotoImage(file=r'kings.png')
+        Label(window, image=photo).grid(row = 1, column = 1, sticky = W)
+
+        Label(window, text = "Type of Alcohol").grid(row = 2, column = 1, sticky = W)
+        Label(window, text = "Date Ordered").grid(row = 3, column = 1, sticky = W)
+        Label(window, text = "Date Received").grid(row = 4, column = 1, sticky = W)
+        Label(window, text = "Number of Packages").grid(row = 5, column = 1, sticky = W)
+        Label(window, text = "Units per Package").grid(row = 6, column = 1, sticky = W)
+       
+        self.typeAlcohol = StringVar()
+        Entry(window, textvariable = self.annualInterestRateVar, justify = RIGHT).grid(row = 2, column = 2)
+        self.dateOrdered = StringVar()
+        Entry(window, textvariable = self.numberOfYearsVar, justify = RIGHT).grid(row = 3, column = 2)
+        self.numberPackages = StringVar()
+        Entry(window, textvariable = self.loanAmountVar, justify = RIGHT).grid(row = 4, column = 2)
+
+        self.monthlyPaymentVar = StringVar()
+        Label(window, textvariable = self.monthlyPaymentVar).grid(row = 5, column = 2, sticky = E)
+        self.totalPaymentVar = StringVar()
+        Label(window, textvariable = self.totalPaymentVar).grid(row = 6, column = 2, sticky = E)    
+       
+        window.mainloop()
