@@ -1,0 +1,74 @@
+'''
+Program: Kings Liqour Inventory Calculator
+Date: April 14, 2022
+Purpose: Final Project
+Installation Instructions: Install this file and the accompanying kings.png in the same folder
+'''
+
+from tkinter import *
+
+Inventory = {
+    "Beer": 10, "Wine": 20, "Liquor": 30
+}
+
+class ShippingCalculator:
+    def __init__(self):
+        window = Tk()
+        window.title("Inventory Calculator")
+
+        photo = PhotoImage(file=r'KingsLogo.gif')
+        Label(window, image=photo).grid(row = 1, column = 1, sticky = W)
+
+       
+        Label(window, text = "Type of Alcohol").grid(row = 2, column = 1, sticky = W)
+        Label(window, text = "Date Ordered").grid(row = 3, column = 1, sticky = W)
+        Label(window, text = "Date Received").grid(row = 4, column = 1, sticky = W)
+        Label(window, text = "Number of Packages").grid(row = 2, column = 3, sticky = W)
+        Label(window, text = "Units per Package").grid(row = 3, column = 3, sticky = W)
+        Label(window, text = "Amount Missing/Broken").grid(row = 5, column = 3, sticky = W)
+        Label(window, text = "Total Inventory").grid(row = 6, column = 3, sticky = W)
+       
+      
+        self.typeAlcohol = StringVar()
+        Entry(window, textvariable = self.typeAlcohol, justify = RIGHT).grid(row = 2, column = 2)
+        self.dateOrdered = StringVar()
+        Entry(window, textvariable = self.dateOrdered, justify = RIGHT).grid(row = 3, column = 2)
+        self.dateReceieved = StringVar()
+        Entry(window, textvariable = self.dateReceieved, justify = RIGHT).grid(row = 4, column = 2)
+        self.numberPackages = IntVar()
+        Entry(window, textvariable = self.numberPackages, justify = RIGHT).grid(row = 2, column = 4)
+        self.unitsPackages = IntVar()
+        Entry(window, textvariable = self.unitsPackages, justify = RIGHT).grid(row = 3, column = 4)
+        self.defect = IntVar()
+        Entry(window, textvariable = self.defect, justify = RIGHT).grid(row = 5, column = 4)
+        
+        
+        
+
+        
+        self.inventory = IntVar()
+        Label(window, textvariable = self.inventory).grid(row = 6, column = 4, sticky = E)
+        self.totalPaymentVar = StringVar()
+        Label(window, textvariable = self.totalPaymentVar).grid(row = 8, column = 2, sticky = E)
+        
+        
+        Button(window, text = "Complete Order", command = self.totalInventory).grid(row = 10, column = 4, sticky = E)
+        Button(window, text = "Help").grid(row = 11, column = 4, sticky = E)       
+        
+
+        itemsMissing = IntVar()
+        Checkbutton(window, text="Missing", variable=itemsMissing).grid(row = 4, column=4, sticky=W)
+        itemsBroken = IntVar()
+        Checkbutton(window, text="Broken", variable=itemsBroken).grid(row = 4, column=5, sticky=W)
+
+        window.mainloop()
+
+    
+    def totalInventory(self):
+        #this function calculates a monthly payment based on the user data entered and returns the value of the monthly payment
+        inventory = self.unitsPackages.get() * self.numberPackages.get() - self.defect.get()
+        self.inventory.set(inventory)
+        
+
+
+ShippingCalculator()
