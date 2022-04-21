@@ -1,0 +1,118 @@
+'''
+Program: Kings Liquor Inventory Calculator
+Date: April 21, 2022
+Purpose: Inventory management system for Kings Liquor
+Installation Instructions: Install this file and the accompanying kings.png in the same folder
+'''
+
+
+from tkinter import *
+from tkinter import ttk
+
+# Creates the window for the program
+window = Tk()
+window.title("Inventory Calculator")
+class ShippingCalculator:
+    def __init__(self):
+        
+
+        photo = PhotoImage(file=r'KingsLogo.gif')
+        Label(window, image=photo).grid(row = 1, column = 1, sticky = W)
+
+        # All the labels for the inputs in the program
+        Label(window, text = "Type of Alcohol").grid(row = 2, column = 1, sticky = W)
+        Label(window, text = "Date Ordered").grid(row = 3, column = 1, sticky = W)
+        Label(window, text = "Date Received").grid(row = 4, column = 1, sticky = W)
+        Label(window, text = "Number of Packages").grid(row = 2, column = 3, sticky = W)
+        Label(window, text = "Units per Package").grid(row = 3, column = 3, sticky = W)
+        Label(window, text = "Amount Missing/Broken").grid(row = 5, column = 3, sticky = W)
+        Label(window, text = "Add Inventory").grid(row = 6, column = 3, sticky = W)
+        Label(window, text = "Total Beer:").grid(row = 10, column = 1, sticky = W)
+        Label(window, text = "Total Liquor:").grid(row = 11, column = 1, sticky = W)
+        Label(window, text = "Total Wine:").grid(row = 12, column = 1, sticky = W)
+        
+        
+        
+        # All the actual places where the user enters in their inputs
+        self.typeAlcohol = StringVar()
+        Entry(window, textvariable = self.typeAlcohol, justify = RIGHT).grid(row = 2, column = 2)
+        self.dateOrdered = StringVar()
+        Entry(window, textvariable = self.dateOrdered, justify = RIGHT).grid(row = 3, column = 2)
+        self.dateReceieved = StringVar()
+        Entry(window, textvariable = self.dateReceieved, justify = RIGHT).grid(row = 4, column = 2)
+        self.numberPackages = IntVar()
+        Entry(window, textvariable = self.numberPackages, justify = RIGHT).grid(row = 2, column = 4)
+        self.unitsPackages = IntVar()
+        Entry(window, textvariable = self.unitsPackages, justify = RIGHT).grid(row = 3, column = 4)
+        self.defect = IntVar()
+        Entry(window, textvariable = self.defect, justify = RIGHT).grid(row = 5, column = 4)
+        self.beer = IntVar()
+        self.beer.set(200)
+        Entry(window, textvariable = self.beer, justify = RIGHT).grid(row = 10, column = 2)
+        self.liquor = IntVar()
+        self.liquor.set(120)
+        Entry(window, textvariable = self.liquor, justify = RIGHT).grid(row = 11, column = 2)
+        self.wine = IntVar()
+        self.wine.set(150)
+        Entry(window, textvariable = self.wine, justify = RIGHT).grid(row = 12, column = 2)
+        
+
+        #Defines the inventory variable and sets the intial value at 0
+        self.inventory = IntVar()
+        self.inventory.set(0)
+        Label(window, textvariable = self.inventory).grid(row = 6, column = 4, sticky = E)
+        
+        
+        # Buttons that have specific functions for the program
+        Button(window, text = "Calculate Order", command = self.totalInventory).grid(row = 11, column = 6, sticky = E)
+        Button(window, text = "Help").grid(row = 10, column = 6, sticky = E)
+        Button(window, text = "Update Inventory", command = self.totalAlcohol).grid(row = 12, column = 6, sticky = E)
+        
+               
+        # Buttons that offer the user a selection to click on based on the status of the goods       
+        self.itemsDefect = IntVar()
+        Radiobutton(window, text="Missing", variable=self.itemsDefect, value = 1).grid(row = 4, column=3, sticky=W)
+        Radiobutton(window, text="Broken", variable=self.itemsDefect, value = 2).grid(row = 4, column=4, sticky=W)
+        Radiobutton(window, text="No issue", variable=self.itemsDefect, value = 3).grid(row = 4, column=5, sticky=W)
+
+        window.mainloop()
+
+    # This function calculates the amount of inventory that comes in a set number of packages based on user input
+    def totalInventory(self):
+        if self.itemsDefect.get() == 1:
+            inventory = self.unitsPackages.get() * self.numberPackages.get() - self.defect.get()
+            self.inventory.set(inventory)
+        elif self.itemsDefect.get() == 2:
+            inventory = self.unitsPackages.get() * self.numberPackages.get() - self.defect.get()
+            self.inventory.set(inventory)
+        else:
+            inventory = self.unitsPackages.get() * self.numberPackages.get()
+            self.inventory.set(inventory)
+
+    # This function updates the current inventory based on the amount calculated in the totalInventory function
+    def totalAlcohol(self):
+        if self.typeAlcohol.get() == "Beer":
+            self.beer.set(self.beer.get() + self.inventory.get())
+        elif self.typeAlcohol.get() == "Liquor":
+            self.liquor.set(self.liquor.get() + self.inventory.get())
+        elif self.typeAlcohol.get() == "Wine":
+            self.wine.set(self.wine.get() + self.inventory.get())
+
+    # This function ensures that the units per packages data entry is greater than 0
+    def validUnitsPackage(self):
+        while self.unitsPackages.get() < 0:
+            self.unitsPackages.set("Please enter a value greater than 0")
+
+    # This function ensures that the number of packages data entry is greater than 0
+    def validNumberPackages(self):
+        while self.numberPackages.get() < 0:
+            self.numberPackages.set("Please enter a value greater than 0")
+    
+    # This function ensures that the amount missing/broken data entry is greater than 0
+    def validDefect(self):
+        while self.itemsDefect.get() < 0:
+            self.itemsDefect.set("Please enter a value greater than 0")
+
+
+# Runs the class    
+ShippingCalculator()
